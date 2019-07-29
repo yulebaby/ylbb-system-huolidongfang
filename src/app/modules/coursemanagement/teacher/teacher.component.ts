@@ -185,7 +185,7 @@ export class TeacherComponent implements OnInit {
     this.http.post('/yeqs/curriculum/selectMemberReserve', { paramJson }, false).then(res => {
       if (res.code == 1000) {
         this.currformList = res.result.list;
-        this.member = res.result.member;
+        //this.member = res.result.member;
         let startDateLists = [],
           endDateLists = [],
           TuesdayLists = [],
@@ -194,19 +194,22 @@ export class TeacherComponent implements OnInit {
           FridayLists = [],
           SaturdayLists = [];
         this.currformList.map(item => {
-          if (item.week == '星期一') {
+          console.log(item.WEEK);
+          if (item.WEEK == '星期一') {
             startDateLists.push(item);
-          } else if (item.week == '星期二') {
+          } else if (item.WEEK == '星期二') {
+            console.log(item);
             TuesdayLists.push(item);
-          } else if (item.week == '星期三') {
+            console.log(TuesdayLists);
+          } else if (item.WEEK == '星期三') {
             WednesdayLists.push(item);
-          } else if (item.week == '星期四') {
+          } else if (item.WEEK == '星期四') {
             ThursdayLists.push(item);
-          } else if (item.week == '星期五') {
+          } else if (item.WEEK == '星期五') {
             FridayLists.push(item);
-          } else if (item.week == '星期六') {
+          } else if (item.WEEK == '星期六') {
             SaturdayLists.push(item);
-          } else if (item.week == '星期日') {
+          } else if (item.WEEK == '星期日') {
             endDateLists.push(item);
           }
         })

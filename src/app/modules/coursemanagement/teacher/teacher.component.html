@@ -168,7 +168,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of startDateLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -176,7 +176,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of TuesdayLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -184,7 +184,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of WednesdayLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -192,7 +192,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of ThursdayLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -200,7 +200,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of FridayLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -208,7 +208,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of SaturdayLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -216,7 +216,7 @@
                 <td *ngIf="currformList.length">
                   <ng-container *ngFor="let data of endDateLists">
                     <div class="dataList" *ngIf="item.startTime == data.startTime&&item.endTime == data.endTime">
-                      <div> 课程：{{data.name}}</div>
+                      <div> 课程：{{data.NAME}}</div>
                       <div>教室：{{data.roomName}}</div>
                     </div>
                   </ng-container>
@@ -243,7 +243,7 @@
             <tbody>
               <!-- <tr *ngFor="let data of currformList"> -->
               <tr *ngFor="let item of listMap">
-                <td>{{ item.currentDate }}/{{ item.week }}</td>
+                <td>{{ item.currentDate }}/{{ item.WEEK }}</td>
                 <td>{{ item.startTime }} — {{ item.endTime }}</td>
                 <td>{{ item.syllabusName }}</td>
                 <td>{{ item.roomName }}</td>

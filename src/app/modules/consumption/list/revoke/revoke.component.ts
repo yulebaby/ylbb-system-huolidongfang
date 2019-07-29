@@ -51,7 +51,7 @@ export class RevokeComponent implements OnInit {
   }
 
   saveLoading: boolean;
-  @DrawerSave('/customer/revocationConsume') save: () => void;
+  @DrawerSave('/yeqs/customer/revocationConsume') save: () => void;
   @DrawerClose() close: () => void;
 
 }
