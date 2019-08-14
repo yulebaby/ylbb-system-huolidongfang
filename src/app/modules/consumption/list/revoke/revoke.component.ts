@@ -46,7 +46,8 @@ export class RevokeComponent implements OnInit {
       weight: [{ value: this.recordInfo.weight, disabled: true }],
       temperature: [{ value: this.recordInfo.temperature, disabled: true }],
       comment: [{ value: this.recordInfo.comment, disabled: true }],
-      reason: [, [Validators.required]]
+      reason: [, [Validators.required]],
+      leaveStatus: [this.recordInfo.leaveStatus]
     });
   }
 
