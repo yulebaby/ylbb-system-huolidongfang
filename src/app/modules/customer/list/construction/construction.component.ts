@@ -46,8 +46,8 @@ export class ConstructionComponent implements OnInit {
   ngOnInit() {
     let formControls: any = {
       memberId: [this.id],
-      cardCode: [, [Validators.required, Validators.maxLength(30)]],
-      cardTypeId: [, [Validators.required]],
+      cardCode: [ this.userInfo.memberCard,  [Validators.required, Validators.maxLength(30)]],
+      cardTypeId: [ , [Validators.required]],
       memberName: [this.userInfo.name, [Validators.required]],
       protocol:[],
       employee_name:[],
@@ -92,7 +92,7 @@ export class ConstructionComponent implements OnInit {
   @DrawerClose() close: () => void;
   saveLoading: boolean;
   save() {
-      
+      console.log(this.formGroup);
       if (this.formGroup.invalid) {
         for (let i in this.formGroup.controls) {
           this.formGroup.controls[i].markAsDirty();
@@ -126,7 +126,9 @@ export class ConstructionComponent implements OnInit {
     this.saveLoading = true;
     this.http.post('/yeqs/member/createCard', {
       paramJson: JSON.stringify(this.formGroup.value)
-    }).then(res => this.drawerRef.close({ memberId: this.id }));
+    }).then(res => {
+      this.drawerRef.close({ memberId: this.id })
+    });
   }
 
 }

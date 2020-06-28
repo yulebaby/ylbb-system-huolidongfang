@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , TemplateRef , ComponentRef} from '@angular/core';
 import { ListPageComponent } from 'src/app/ng-relax/components/list-page/list-page.component';
 import { QueryNode } from 'src/app/ng-relax/components/query/query.component';
 import { PreviewComponent } from './preview/preview.component';
@@ -9,6 +9,7 @@ import { CurriculumComponent } from './curriculum/curriculum.component';
 import { HttpService } from 'src/app/ng-relax/services/http.service';
 import { NzMessageService, NzDrawerService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list',
@@ -18,7 +19,11 @@ import { ActivatedRoute } from '@angular/router';
 export class ListComponent implements OnInit {
 
   @ViewChild('listPage') listPage: ListPageComponent;
-
+  componentRef: ComponentRef<any>;
+  baseFormGroup: FormGroup;
+  drawerTitle: string;
+  teacherList: any;
+  showDrawer: boolean = false;
   queryNode: QueryNode[] = [
     {
       label       : '会员卡号',
@@ -119,11 +124,23 @@ export class ListComponent implements OnInit {
     private http: HttpService,
     private message: NzMessageService,
     private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder = new FormBuilder(),
     private drawer: NzDrawerService
-    ) { }
+    ) { 
+      this.http.post('/tongka/teacherList', {}, false).then(res => this.teacherList = res.result);   
+    }
 
   private getQueryParams;
   ngOnInit() {
+      
+    this.baseFormGroup = this.fb.group({
+      consumeId: [],
+      swimTeacherId: [ ,[Validators.required]],
+      assisTeacherId: [ ,[Validators.required]],
+      showerTeacherId: [],
+      fitnessTeacherId: [],
+    });
+
     this.activatedRoute.queryParamMap.subscribe((res: any) => {
       if (res.params.memberId) {
         this.getQueryParams = res.params;
@@ -151,5 +168,46 @@ export class ListComponent implements OnInit {
       drawer.afterClose.subscribe(res => res && this.listPage.eaTable._request());
     }
   }
+  saveLoading: boolean;
+  saveDrawer() {
+    this.saveLoading = true;
+    this.componentRef.instance.save().then(res => {
+      this.saveLoading = false;
+      if (res) {
+        this.showDrawer = false;
+        this.listPage.eaTable._request();
+      }
+    });
+  }
+  @ViewChild('drawerTemplate') drawerTemplate: TemplateRef<any>;
+  teacherDetail(data){
+    this.baseFormGroup.patchValue({consumeId: data.id});
+    this.baseFormGroup.patchValue({swimTeacherId: data.teacherId});
+    this.baseFormGroup.patchValue({assisTeacherId: data.assisTeacherId});
+    this.baseFormGroup.patchValue({showerTeacherId: data.showerTeacherId});
+    this.baseFormGroup.patchValue({fitnessTeacherId: data.fitnessTeacherId});   
+    this.baseFormGroup.patchValue({leaveStatus: data.leaveStatus});  
+    this.drawer.create({
+        nzTitle: '授课老师',
+        nzWidth: 700,
+        nzContent: this.drawerTemplate
+      });
+  }
+  saveLoadingx: boolean;
+  save(drawerRef){
+    if (this.baseFormGroup.invalid) {
+    for (let i in this.baseFormGroup.controls) {
+      this.baseFormGroup.controls[i].markAsDirty();
+      this.baseFormGroup.controls[i].updateValueAndValidity();
+    }
+  }else{
+    this.saveLoadingx = true;
+    this.http.post('/yeqs/customer/updateTeacher', { paramJson: JSON.stringify(this.baseFormGroup.value) }).then(res => {
+      this.saveLoadingx = false;
+      drawerRef.close();
+      this.listPage.eaTable.request(this.getQueryParams);
+    }).catch();
+  }
+}
 
 }
